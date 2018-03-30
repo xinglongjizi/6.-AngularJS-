@@ -1,0 +1,52 @@
+<!doctype html>
+<html ng-app="MyModule">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+		
+		<div ng-controller="MyCtrl">
+
+			<drink xxx="{{ctrlFlavor}}"></drink>
+
+		</div>
+
+</body>
+
+<script src="../framework/angular-1.3.0.14/angular.js"></script>
+
+<script>
+		
+var myModule = angular.module("MyModule", []);
+
+myModule.controller('MyCtrl', ['$scope', function($scope){
+	$scope.ctrlFlavor="百威";
+}])
+
+// 需求是： 在指令的模板中输出指令所处控制器中的一个变量
+myModule.directive("drink", function() {
+    return {
+    	restrict:'AE',
+
+    	// 使用独立作用于代替link函数
+        scope:{
+        	xxx: '@'  
+        	// xxx 对应 指令元素上的用于接受控制器变量值的 自定义属性  
+        	// '@' 表示单向绑定:控制器到指令，即控制器的变量变，指令里跟着变，反过来指令里的变量变，控制器则不会变 
+        	// 此时xxx已获取到控制器里变量的值了
+        },
+        template: "<div>{{xxx}}</div>"    // 输出这个xxx
+       
+
+        /*
+        采用link函数的方式: 在指令元素上用自定义属性接受控制器中的变量的值
+        link: function(scope,element,attrs){
+        	scope.xxx = attrs.xxx;
+        }
+        */
+    }
+});
+
+
+</script>
+</html>
