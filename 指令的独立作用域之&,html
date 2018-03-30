@@ -1,0 +1,41 @@
+<!doctype html>
+<html ng-app="MyModule">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+
+		<div ng-controller="MyCtrl">
+			<greeting greet="sayHello(name)"></greeting>
+			<greeting greet="sayHello(name)"></greeting>
+			<greeting greet="sayHello(name)"></greeting>
+		</div>
+
+</body>
+
+
+<script src="../framework/angular-1.3.0.14/angular.js"></script>
+
+<script>
+
+var myModule = angular.module("MyModule", []);
+
+myModule.controller('MyCtrl', ['$scope', function($scope){
+	$scope.sayHello=function(name){
+		alert("Hello "+name);
+	}
+}])
+
+myModule.directive("greeting", function() {
+    return {
+    	restrict:'AE',
+        scope:{
+        	greet:'&' // &用于通过属性获取控制器里的函数的( 而不是变量, & = 就是获取变量 )
+        },
+        template:'<input type="text" ng-model="userName" /><br/>'+
+        		 '<button ng-click="greet({name:userName})">Greeting</button><br/>'
+    }
+});
+
+</script>
+</html>
