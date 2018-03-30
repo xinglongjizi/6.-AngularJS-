@@ -1,0 +1,36 @@
+<!doctype html>
+<html ng-app="MyModule">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+		<div ng-controller="MyCtrl">
+
+			Ctrl     :<input type="text" ng-model="ctrlFlavor"> {{ctrlFlavor}}
+			<br>
+			Directive:<drink xxx="ctrlFlavor"></drink>
+			
+		</div>
+</body>
+
+<script src="../framework/angular-1.3.0.14/angular.js"></script>
+<script>
+
+var myModule = angular.module("MyModule", []);
+
+myModule.controller('MyCtrl', ['$scope', function($scope){
+	$scope.ctrlFlavor="百威";
+}]);
+
+myModule.directive("drink", function() {
+    return {
+    	restrict:'AE',
+        scope:{
+        	xxx: '=' // 与@代表的单项绑定 对应的双向绑定
+        },
+        template:'<input type="text" ng-model="xxx"/> {{xxx}}'
+    }
+});
+
+</script>
+</html>
